@@ -5,6 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "prestart:server": "npm install",
+    "prestart:client": "cd client && npm install",
+    "install:dependencies": "npm run prestart:server && npm run prestart:client",
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
@@ -24,6 +27,7 @@
     "http-status-codes": "2.2.0",
     "jsonwebtoken": "8.5.1",
     "mongoose": "6.1.6",
+    "morgan": "1.10.0",
     "validator": "13.7.0"
   }
 }
