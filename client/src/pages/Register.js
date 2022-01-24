@@ -14,8 +14,14 @@ const initialState = {
 
 const Register = () => {
   const [inputValues, setInputValues] = useState(initialState);
-  const { isLoading, showAlert, user, displayErrorAlert, registerUser } =
-    useAppContext();
+  const {
+    isLoading,
+    showAlert,
+    user,
+    displayErrorAlert,
+    registerUser,
+    loginUser,
+  } = useAppContext();
 
   const navigate = useNavigate();
 
@@ -44,7 +50,7 @@ const Register = () => {
 
     const currentUser = { name, email, password };
     if (isMember) {
-      console.log("Already a member, so login");
+      loginUser(currentUser);
     } else {
       registerUser(currentUser);
     }
@@ -60,8 +66,8 @@ const Register = () => {
   };
 
   return (
-    <Wrapper className="full-page">
-      <form className="form" onSubmit={handleFormSubmit}>
+    <Wrapper className='full-page'>
+      <form className='form' onSubmit={handleFormSubmit}>
         <Logo />
         <h3>{inputValues.isMember ? "Login" : "Register"}</h3>
 
@@ -70,9 +76,9 @@ const Register = () => {
         {/* Name field */}
         {!inputValues.isMember && (
           <FormRow
-            type="text"
-            name="name"
-            labelText="name"
+            type='text'
+            name='name'
+            labelText='name'
             value={inputValues.name}
             onInputChange={handleInputChange}
           />
@@ -80,31 +86,31 @@ const Register = () => {
 
         {/* Email field */}
         <FormRow
-          type="email"
-          name="email"
-          labelText="email"
+          type='email'
+          name='email'
+          labelText='email'
           value={inputValues.email}
           onInputChange={handleInputChange}
         />
 
         {/* Password field */}
         <FormRow
-          type="password"
-          name="password"
-          labelText="password"
+          type='password'
+          name='password'
+          labelText='password'
           value={inputValues.password}
           onInputChange={handleInputChange}
         />
 
-        <button type="submit" className="btn btn-block" disabled={isLoading}>
+        <button type='submit' className='btn btn-block' disabled={isLoading}>
           Submit
         </button>
 
         <p>
           {inputValues.isMember ? "Not a member yet?" : "Already a member?"}
           <button
-            type="button"
-            className="member-btn"
+            type='button'
+            className='member-btn'
             onClick={handleToggleMember}
           >
             {inputValues.isMember ? "Register" : "Login"}
