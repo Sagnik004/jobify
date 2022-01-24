@@ -8,6 +8,9 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
+  LOGIN_USER_ERROR,
 } from "./actions.js";
 
 const user = localStorage.getItem("user");
@@ -41,6 +44,18 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
+  const addUserToLocalStorage = (user, token, location) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("location", location);
+  };
+
+  const removeUserFromLocalStorage = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("location");
+  };
+
   const registerUser = async (currentUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
 
@@ -67,20 +82,33 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const addUserToLocalStorage = (user, token, location) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("token", token);
-    localStorage.setItem("location", location);
-  };
+  const loginUser = async (currentUser) => {
+    dispatch({ type: LOGIN_USER_BEGIN });
 
-  const removeUserFromLocalStorage = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    localStorage.removeItem("location");
+    try {
+      const { data } = await axios.post("/api/v1/auth/login", currentUser);
+      const { user, token, location } = data;
+
+      dispatch({
+        type: LOGIN_USER_SUCCESS,
+        payload: { user, token, location },
+      });
+
+      addUserToLocalStorage(user, token, location);
+    } catch (err) {
+      dispatch({
+        type: LOGIN_USER_ERROR,
+        payload: { msg: err.response.data.msg },
+      });
+    }
+
+    clearAlert();
   };
 
   return (
-    <AppContext.Provider value={{ ...state, displayErrorAlert, registerUser }}>
+    <AppContext.Provider
+      value={{ ...state, displayErrorAlert, registerUser, loginUser }}
+    >
       {children}
     </AppContext.Provider>
   );
