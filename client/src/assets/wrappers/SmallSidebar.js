@@ -1,9 +1,10 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.aside`
   @media (min-width: 992px) {
     display: none;
   }
+
   .sidebar-container {
     position: fixed;
     inset: 0;
@@ -15,10 +16,12 @@ const Wrapper = styled.aside`
     opacity: 0;
     transition: var(--transition);
   }
+
   .show-sidebar {
     z-index: 99;
     opacity: 1;
   }
+
   .content {
     background: var(--white);
     width: var(--fluid-width);
@@ -30,6 +33,7 @@ const Wrapper = styled.aside`
     align-items: center;
     flex-direction: column;
   }
+
   .close-btn {
     position: absolute;
     top: 10px;
@@ -40,11 +44,13 @@ const Wrapper = styled.aside`
     color: var(--red-dark);
     cursor: pointer;
   }
+
   .nav-links {
     padding-top: 2rem;
     display: flex;
     flex-direction: column;
   }
+
   .nav-link {
     display: flex;
     align-items: center;
@@ -52,25 +58,35 @@ const Wrapper = styled.aside`
     padding: 1rem 0;
     text-transform: capitalize;
     transition: var(--transition);
+    border-left: 5px solid transparent;
   }
+
   .nav-link:hover {
     color: var(--grey-900);
   }
+
   .nav-link:hover .icon {
     color: var(--primary-500);
   }
+
   .icon {
     font-size: 1.5rem;
     margin-right: 1rem;
     display: grid;
     place-items: center;
     transition: var(--transition);
+    padding-left: 0.5rem;
+    margin-left: 0.8rem;
   }
+
   .active {
     color: var(--grey-900);
+    border-left-color: var(--primary-500);
   }
+
   .active .icon {
     color: var(--primary-500);
   }
-`
-export default Wrapper
+`;
+
+export default Wrapper;
