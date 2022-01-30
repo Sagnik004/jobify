@@ -12,6 +12,9 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
   LOGOUT_USER,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
   TOGGLE_SIDEBAR,
 } from "./actions.js";
 
@@ -33,8 +36,38 @@ const initialState = {
 
 // Create Context, Provider
 const AppContext = React.createContext();
+
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Axios
+  const authFetch = axios.create({
+    baseURL: "/api/v1",
+  });
+
+  // For Request
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (err) => {
+      return Promise.reject(err);
+    }
+  );
+
+  // For Response
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (err) => {
+      if (err.response.status === 401) {
+        logoutUser();
+      }
+      return Promise.reject(err);
+    }
+  );
 
   const displayErrorAlert = () => {
     dispatch({ type: DISPLAY_ERROR_ALERT });
@@ -117,6 +150,31 @@ const AppProvider = ({ children }) => {
     dispatch({ type: TOGGLE_SIDEBAR });
   };
 
+  const updateUser = async (currentUser) => {
+    dispatch({ type: UPDATE_USER_BEGIN });
+
+    try {
+      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+      const { user, location, token } = data;
+
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user, location, token },
+      });
+
+      addUserToLocalStorage(user, token, location);
+    } catch (err) {
+      if (err.response.status !== 401) {
+        dispatch({
+          type: UPDATE_USER_ERROR,
+          payload: { msg: err.response.data.msg },
+        });
+      }
+    }
+
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -126,6 +184,7 @@ const AppProvider = ({ children }) => {
         loginUser,
         logoutUser,
         toggleSidebar,
+        updateUser,
       }}
     >
       {children}
