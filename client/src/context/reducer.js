@@ -12,6 +12,11 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
   TOGGLE_SIDEBAR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -118,6 +123,47 @@ const reducer = (state, action) => {
       return {
         ...state,
         showSidebar: !state.showSidebar,
+      };
+    case HANDLE_CHANGE:
+      return {
+        ...state,
+        [action.payload.name]: action.payload.value,
+      };
+    case CLEAR_VALUES:
+      const initialJobState = {
+        isEditing: false,
+        editJobId: "",
+        position: "",
+        company: "",
+        jobLocation: state.userLocation,
+        jobType: "full-time",
+        jobStatus: "pending",
+      };
+
+      return {
+        ...state,
+        ...initialJobState,
+      };
+    case CREATE_JOB_BEGIN:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case CREATE_JOB_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: "success",
+        alertText: "New Job Created!",
+      };
+    case CREATE_JOB_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        showAlert: true,
+        alertType: "danger",
+        alertText: action.payload.msg,
       };
     default:
       throw new Error(`No such action: ${action.type}`);
