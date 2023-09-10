@@ -31,4 +31,5 @@ const Wrapper = styled.section`
     margin-left: 0.25rem;
   }
 `;
+
 export default Wrapper;
