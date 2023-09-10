@@ -9,7 +9,7 @@ const Register = () => {
     <Wrapper>
       <form className='form'>
         <Logo />
-        <h4>Register Page</h4>
+        <h4>Register</h4>
         <FormRow
           type='text'
           name='name'
@@ -47,7 +47,7 @@ const Register = () => {
         <p>
           Already a member?
           <Link to='/login' className='member-btn'>
-            Login Page
+            Login
           </Link>
         </p>
       </form>

@@ -278,8 +278,14 @@ button:disabled {
   letter-spacing: var(--letter-spacing);
   text-transform: capitalize;
 }
-/* alert */
 
+@media (max-width: 600px) {
+  .form-label {
+    margin-bottom: 0.25rem;
+  }
+}
+
+/* alert */
 @keyframes spinner {
   to {
     transform: rotate(360deg);

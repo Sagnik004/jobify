@@ -4,6 +4,9 @@ const Wrapper = styled.section`
   min-height: 100vh;
   display: grid;
   align-items: center;
+  @media (max-width: 600px) {
+    align-items: start;
+  }
   .logo {
     display: block;
     margin: 0 auto;
@@ -24,6 +27,7 @@ const Wrapper = styled.section`
   }
   .btn {
     margin-top: 1rem;
+    padding: 0.6rem;
   }
   .member-btn {
     color: var(--primary-500);
