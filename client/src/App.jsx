@@ -7,7 +7,16 @@ import {
   DashboardLayout,
   Landing,
   Error,
+  AddJob,
+  Stats,
+  AllJobs,
+  Profile,
+  Admin,
 } from './pages';
+import { setDefaultTheme } from './utils/setTheme';
+
+// Set dark or light theme
+setDefaultTheme();
 
 const router = createBrowserRouter([
   {
@@ -30,6 +39,28 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <AddJob />,
+          },
+          {
+            path: 'stats',
+            element: <Stats />,
+          },
+          {
+            path: 'all-jobs',
+            element: <AllJobs />,
+          },
+          {
+            path: 'profile',
+            element: <Profile />,
+          },
+          {
+            path: 'admin',
+            element: <Admin />,
+          },
+        ],
       },
     ],
   },

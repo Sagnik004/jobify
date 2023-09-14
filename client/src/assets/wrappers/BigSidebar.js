@@ -59,4 +59,5 @@ const Wrapper = styled.aside`
     }
   }
 `;
+
 export default Wrapper;

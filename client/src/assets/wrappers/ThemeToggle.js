@@ -13,4 +13,5 @@ const Wrapper = styled.button`
     color: var(--text-color);
   }
 `;
+
 export default Wrapper;
