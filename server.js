@@ -87,6 +87,16 @@ app.delete('/api/v1/jobs/:id', (req, res) => {
   res.status(200).json({ msg: 'Job deleted successfully' });
 });
 
+// Route not found middleware
+app.use('*', (req, res) => {
+  res.status(404).json({ msg: 'Resource not found' });
+});
+// Global error handler middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ msg: 'Something went wrong' });
+});
+
 app.listen(port, () => {
   console.log(`Server running on port:${port}...`);
 });
