@@ -11,18 +11,16 @@ let jobs = [
 export const createNewJob = async (req, res) => {
   const job = await Job.create(req.body);
   res.status(201).json({ job });
-}
+};
 
 export const getAllJobs = async (req, res) => {
+  const jobs = await Job.find({});
   res.status(200).json({ jobs });
 };
 
 export const getSingleJob = async (req, res) => {
   const { id } = req.params;
-  if (!id) {
-    return res.status(400).json({ msg: `Please provide job id` });
-  }
-  const job = jobs.find((job) => job.id === id);
+  const job = await Job.findById(id);
   if (!job) {
     return res.status(404).json({ msg: `No job found with id ${id}` });
   }
@@ -35,7 +33,7 @@ export const updateJob = async (req, res) => {
     return res.status(400).json({ msg: 'Please provide company and position' });
   }
   const { id } = req.params;
-  const job = jobs.find(job => job.id === id);
+  const job = jobs.find((job) => job.id === id);
   if (!job) {
     return res.status(404).json({ msg: `No job found with id ${id}` });
   }
@@ -47,11 +45,11 @@ export const updateJob = async (req, res) => {
 
 export const deleteJob = async (req, res) => {
   const { id } = req.params;
-  const job = jobs.find(job => job.id === id);
+  const job = jobs.find((job) => job.id === id);
   if (!job) {
     return res.status(400).json({ msg: `No job found with id ${id}` });
   }
-  const newJobs = jobs.filter(job => job.id !== id);
+  const newJobs = jobs.filter((job) => job.id !== id);
   jobs = newJobs;
   res.status(200).json({ msg: 'Job deleted successfully' });
 };
