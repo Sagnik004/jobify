@@ -1,3 +1,4 @@
+import 'express-async-errors'; // must be at the top and start of application
 import express from 'express';
 import morgan from 'morgan';
 import * as dotenv from 'dotenv';
