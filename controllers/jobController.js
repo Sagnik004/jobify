@@ -1,13 +1,15 @@
+import { StatusCodes } from 'http-status-codes';
+
 import Job from '../models/JobModel.js';
 
 export const createNewJob = async (req, res) => {
   const job = await Job.create(req.body);
-  res.status(201).json({ job });
+  res.status(StatusCodes.CREATED).json({ job });
 };
 
 export const getAllJobs = async (req, res) => {
   const jobs = await Job.find({});
-  res.status(200).json({ jobs });
+  res.status(StatusCodes.OK).json({ jobs });
 };
 
 export const getSingleJob = async (req, res) => {
@@ -16,7 +18,7 @@ export const getSingleJob = async (req, res) => {
   if (!job) {
     return res.status(404).json({ msg: `No job found with id ${id}` });
   }
-  res.status(200).json({ job });
+  res.status(StatusCodes.OK).json({ job });
 };
 
 export const updateJob = async (req, res) => {
@@ -27,7 +29,7 @@ export const updateJob = async (req, res) => {
     return res.status(404).json({ msg: `No job found with id ${id}` });
   }
 
-  res.status(200).json({ msg: 'Job modified', job: updatedJob });
+  res.status(StatusCodes.OK).json({ msg: 'Job modified', job: updatedJob });
 };
 
 export const deleteJob = async (req, res) => {
@@ -36,5 +38,5 @@ export const deleteJob = async (req, res) => {
   if (!deletedJob) {
     return res.status(400).json({ msg: `No job found with id ${id}` });
   }
-  res.status(200).json({ msg: 'Job deleted successfully', job: deletedJob });
+  res.status(StatusCodes.OK).json({ msg: 'Job deleted successfully', job: deletedJob });
 };
