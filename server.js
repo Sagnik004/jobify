@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import jobRouter from './routes/jobRouter.js';
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 
 dotenv.config();
 const app = express();
@@ -33,10 +34,7 @@ app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Resource not found' });
 });
 // GLOBAL ERROR HANDLER MIDDLEWARE
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ msg: 'Something went wrong' });
-});
+app.use(errorHandlerMiddleware);
 
 /******************** CONNECT TO DB & START SERVER ********************/
 try {
