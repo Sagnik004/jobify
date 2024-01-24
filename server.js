@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import jobRouter from './routes/jobRouter.js';
+import authRouter from './routes/authRouter.js';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 
 dotenv.config();
@@ -26,7 +27,8 @@ app.post('/', (req, res) => {
   res.json({ message: 'data received', data: req.body });
 });
 
-// JOB RELATED ROUTES
+// AUTH,JOB RELATED ROUTES
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', jobRouter);
 
 // ROUTE NOT FOUND MIDDLEWARE
