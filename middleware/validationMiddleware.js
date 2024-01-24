@@ -2,6 +2,7 @@ import { body, param, validationResult } from 'express-validator';
 import mongoose from 'mongoose';
 
 import Job from '../models/JobModel.js';
+import User from '../models/UserModel.js';
 import { BadRequestError, NotFoundError } from '../errors/customErrors.js';
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js';
 
@@ -47,4 +48,28 @@ export const validateIdParam = withValidationErrors([
       throw new NotFoundError(`No job found with id: ${value}`);
     }
   }),
+]);
+
+export const validateRegisterUser = withValidationErrors([
+  body('name').trim().notEmpty().withMessage('Name is required'),
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Invalid email format')
+    .custom(async (email) => {
+      const user = await User.findOne({ email });
+      if (user) {
+        throw new BadRequestError('Email already exists');
+      }
+    }),
+  body('password')
+    .trim()
+    .notEmpty()
+    .withMessage('Password is required')
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters long'),
+  body('lastName').trim().notEmpty().withMessage('Last name is required'),
+  body('location').trim().notEmpty().withMessage('Location is required'),
 ]);
