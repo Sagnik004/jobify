@@ -1,7 +1,8 @@
 import { StatusCodes } from 'http-status-codes';
 
 import User from '../models/UserModel.js';
-import { hashPassword } from '../utils/passwordUtils.js';
+import { comparePassword, hashPassword } from '../utils/passwordUtils.js';
+import { UnauthenticatedError } from '../errors/customErrors.js';
 
 export const register = async (req, res) => {
   // First user to register in the site will be an admin
@@ -17,5 +18,21 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  res.send('login');
+  const { email, password } = req.body;
+
+  // Find if valid email/user
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new UnauthenticatedError('Invalid credentials');
+  }
+  // Find if valid password
+  const isPasswordCorrect = await comparePassword(password, user.password);
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError('Invalid credentials');
+  }
+  // If we like to validate in single line
+  // const isValidUser = user && (await comparePassword(password, user.password));
+  // if (!isValidUser) throw new UnauthenticatedError('Invalid credentials');
+
+  res.send('login page');
 };
