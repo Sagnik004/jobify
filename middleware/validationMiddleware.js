@@ -73,3 +73,13 @@ export const validateRegisterUser = withValidationErrors([
   body('lastName').trim().notEmpty().withMessage('Last name is required'),
   body('location').trim().notEmpty().withMessage('Location is required'),
 ]);
+
+export const validateLoginInput = withValidationErrors([
+  body('email')
+    .trim()
+    .notEmpty()
+    .withMessage('Email is required')
+    .isEmail()
+    .withMessage('Invalid email format'),
+  body('password').trim().notEmpty().withMessage('Password is required'),
+]);
