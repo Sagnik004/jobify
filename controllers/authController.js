@@ -35,7 +35,7 @@ export const login = async (req, res) => {
   // const isValidUser = user && (await comparePassword(password, user.password));
   // if (!isValidUser) throw new UnauthenticatedError('Invalid credentials');
 
-  // Generate JWT and send back as HTTP Only cookie which should expire in 1 day
+  // Generate JWT and send back as HTTP Only cookie and set to expire in 1 day
   const token = createJWT({ userId: user._id, role: user.role });
   const oneDayInMillis = 24 * 60 * 60 * 1000;
   res.cookie('token', token, {

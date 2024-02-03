@@ -3,10 +3,12 @@ import express from 'express';
 import morgan from 'morgan';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 
 import jobRouter from './routes/jobRouter.js';
 import authRouter from './routes/authRouter.js';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
+import { authenticateUser } from './middleware/authMiddleware.js';
 
 dotenv.config();
 const app = express();
@@ -17,6 +19,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev')); // For better development logs
 }
 app.use(express.json()); // Allow to receive JSON payloads
+app.use(cookieParser()); // Parse incoming cookies (JWT)
 
 /******************** ROUTES ********************/
 app.get('/', (req, res) => {
@@ -29,7 +32,7 @@ app.post('/', (req, res) => {
 
 // AUTH,JOB RELATED ROUTES
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', jobRouter);
+app.use('/api/v1/jobs', authenticateUser, jobRouter);
 
 // ROUTE NOT FOUND MIDDLEWARE
 app.use('*', (req, res) => {
