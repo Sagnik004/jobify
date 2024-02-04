@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 
 import jobRouter from './routes/jobRouter.js';
 import authRouter from './routes/authRouter.js';
+import userRouter from './routes/userRouter.js';
 import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
 import { authenticateUser } from './middleware/authMiddleware.js';
 
@@ -33,6 +34,7 @@ app.post('/', (req, res) => {
 // AUTH,JOB RELATED ROUTES
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/jobs', authenticateUser, jobRouter);
+app.use('/api/v1/users', authenticateUser, userRouter);
 
 // ROUTE NOT FOUND MIDDLEWARE
 app.use('*', (req, res) => {
