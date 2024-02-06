@@ -15,6 +15,7 @@ import {
 } from './pages';
 import { setDefaultTheme } from './utils/setTheme';
 import { action as registerAction } from './pages/Register';
+import { action as loginAction } from './pages/Login';
 
 // Set dark or light theme
 setDefaultTheme();
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
+        action: loginAction,
       },
       {
         path: 'dashboard',
