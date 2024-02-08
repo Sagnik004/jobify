@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const FormRow = (props) => {
-  const { type, name, labelText, placeholder, isRequired } = props;
+  const { type, name, labelText, placeholder, defaultValue = '' } = props;
 
   return (
     <div className='form-row'>
@@ -14,7 +14,8 @@ const FormRow = (props) => {
         name={name}
         className='form-input'
         placeholder={placeholder}
-        required={isRequired}
+        defaultValue={defaultValue}
+        required
       />
     </div>
   );
@@ -25,7 +26,7 @@ FormRow.propTypes = {
   name: PropTypes.string.isRequired,
   labelText: PropTypes.string,
   placeholder: PropTypes.string,
-  isRequired: PropTypes.bool.isRequired,
+  defaultValue: PropTypes.string,
 };
 
 export default FormRow;

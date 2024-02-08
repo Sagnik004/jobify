@@ -16,6 +16,7 @@ import {
 import { setDefaultTheme } from './utils/setTheme';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
+import { action as addJobAction } from './pages/AddJob';
 import { loader as dashboardLoader } from './pages/DashboardLayout';
 
 // Set dark or light theme
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <AddJob />,
+            action: addJobAction,
           },
           {
             path: 'stats',
