@@ -7,7 +7,7 @@ import { BigSidebar, Navbar, SmallSidebar } from '../components';
 import { setDefaultTheme, changeTheme } from '../utils/setTheme';
 import customFetch from '../utils/customFetch';
 
-export const loader = async () => {
+const loader = async () => {
   // Retrieve user details from backend. Token will get passed along.
   // On success, data will be available to component.
   // On failure, we will redirect user to root page for security reasons
@@ -70,5 +70,7 @@ const DashboardLayout = () => {
 };
 
 export const useDashboardContext = () => useContext(DashboardContext);
+
+DashboardLayout.loader = loader;
 
 export default DashboardLayout;

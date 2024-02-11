@@ -13,17 +13,10 @@ import {
   Profile,
   Admin,
   EditJob,
+  DeleteJob
 } from './pages';
+// import DeleteJob.action as deleteJobAction from './pages/DeleteJob';
 import { setDefaultTheme } from './utils/setTheme';
-import { action as registerAction } from './pages/Register';
-import { action as loginAction } from './pages/Login';
-import { action as addJobAction } from './pages/AddJob';
-import { action as editJobAction } from './pages/EditJob';
-import { action as deleteJobAction } from './pages/DeleteJob';
-import { loader as dashboardLoader } from './pages/DashboardLayout';
-import { loader as allJobsLoader } from './pages/AllJobs';
-import { loader as editJobLoader } from './pages/EditJob';
-import { loader as adminLoader } from './pages/Admin';
 
 // Set dark or light theme
 setDefaultTheme();
@@ -41,22 +34,22 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
-        action: registerAction,
+        action: Register.action,
       },
       {
         path: 'login',
         element: <Login />,
-        action: loginAction,
+        action: Login.action,
       },
       {
         path: 'dashboard',
         element: <DashboardLayout />,
-        loader: dashboardLoader,
+        loader: DashboardLayout.loader,
         children: [
           {
             index: true,
             element: <AddJob />,
-            action: addJobAction,
+            action: AddJob.action,
           },
           {
             path: 'stats',
@@ -65,7 +58,7 @@ const router = createBrowserRouter([
           {
             path: 'all-jobs',
             element: <AllJobs />,
-            loader: allJobsLoader,
+            loader: AllJobs.loader,
           },
           {
             path: 'profile',
@@ -74,17 +67,17 @@ const router = createBrowserRouter([
           {
             path: 'admin',
             element: <Admin />,
-            loader: adminLoader,
+            loader: Admin.loader,
           },
           {
             path: 'edit-job/:id',
             element: <EditJob />,
-            loader: editJobLoader,
-            action: editJobAction,
+            loader: EditJob.loader,
+            action: EditJob.action,
           },
           {
             path: 'delete-job/:id',
-            action: deleteJobAction,
+            action: DeleteJob.action,
           },
         ],
       },

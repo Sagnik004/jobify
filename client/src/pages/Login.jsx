@@ -5,7 +5,7 @@ import { Logo, FormRow } from '../components';
 import Wrapper from '../assets/wrappers/RegisterAndLoginPage';
 import customFetch from '../utils/customFetch';
 
-export const action = async ({ request }) => {
+const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -56,5 +56,7 @@ const Login = () => {
     </Wrapper>
   );
 };
+
+Login.action = action;
 
 export default Login;

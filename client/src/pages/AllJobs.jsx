@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { JobsContainer, SearchContainer } from '../components';
 import customFetch from '../utils/customFetch';
 
-export const loader = async ({ request }) => {
+const loader = async ({ request }) => {
   try {
     const { data } = await customFetch.get('/jobs');
     return { data };
@@ -29,5 +29,7 @@ const AllJobs = () => {
 };
 
 export const useAllJobsContext = () => useContext(AllJobsContext);
+
+AllJobs.loader = loader;
 
 export default AllJobs;

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import customFetch from '../utils/customFetch';
 
-export const action = async ({ params }) => {
+const action = async ({ params }) => {
   try {
     await customFetch.delete(`/jobs/${params.id}`);
     toast.success('Job deleted successfully!');
@@ -16,3 +16,5 @@ export const action = async ({ params }) => {
 export default function DeleteJob() {
   return <></>;
 }
+
+DeleteJob.action = action;

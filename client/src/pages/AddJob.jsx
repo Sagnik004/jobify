@@ -11,7 +11,7 @@ import Wrapper from '../assets/wrappers/DashboardFormPage';
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants';
 import customFetch from '../utils/customFetch';
 
-export const action = async ({ request }) => {
+const action = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
@@ -68,5 +68,7 @@ const AddJob = () => {
     </Wrapper>
   );
 };
+
+AddJob.action = action;
 
 export default AddJob;

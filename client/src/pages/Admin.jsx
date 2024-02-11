@@ -6,7 +6,7 @@ import { StatItem } from '../components';
 import Wrapper from '../assets/wrappers/StatsContainer';
 import customFetch from '../utils/customFetch';
 
-export const loader = async () => {
+const loader = async () => {
   try {
     const response = await customFetch.get('/users/admin/app-stats');
     return response.data;
@@ -38,5 +38,7 @@ const Admin = () => {
     </Wrapper>
   );
 };
+
+Admin.loader = loader;
 
 export default Admin;

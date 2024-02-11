@@ -11,6 +11,6 @@ const root = ReactDOM.createRoot(rootEl);
 root.render(
   <React.StrictMode>
     <App />
-    <ToastContainer position='top-right' />
+    <ToastContainer position='top-center' />
   </React.StrictMode>
 );
