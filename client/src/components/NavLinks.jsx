@@ -12,7 +12,10 @@ const NavLinks = (props) => {
     <div className='nav-links'>
       {links.map((link) => {
         const { text, path, icon } = link;
-        // TODO: Admin user functionality
+        const { role } = user;
+        if (path === 'admin' && role !== 'admin') {
+          return;
+        }
         return (
           <NavLink
             to={path}
