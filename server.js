@@ -1,4 +1,6 @@
 import 'express-async-errors'; // must be at the top and start of application
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import express from 'express';
 import morgan from 'morgan';
 import * as dotenv from 'dotenv';
@@ -15,10 +17,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5100;
 
-// Middleware's
+/******************** MIDDLEWARES ********************/
+// Setup public folder
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, './public')));
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev')); // For better development logs
 }
+
 app.use(express.json()); // Allow to receive JSON payloads
 app.use(cookieParser()); // Parse incoming cookies (JWT)
 
