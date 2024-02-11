@@ -11,14 +11,18 @@ import {
   validateJobInput,
   validateIdParam,
 } from '../middleware/validationMiddleware.js';
+import { checkForTestUser } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
-router.route('/').get(getAllJobs).post(validateJobInput, createNewJob);
+router
+  .route('/')
+  .get(getAllJobs)
+  .post(checkForTestUser, validateJobInput, createNewJob);
 router
   .route('/:id')
   .get(validateIdParam, getSingleJob)
-  .patch(validateIdParam, validateJobInput, updateJob)
-  .delete(validateIdParam, deleteJob);
+  .patch(checkForTestUser, validateIdParam, validateJobInput, updateJob)
+  .delete(checkForTestUser, validateIdParam, deleteJob);
 
 export default router;
