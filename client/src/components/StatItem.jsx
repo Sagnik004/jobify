@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import Wrapper from '../assets/wrappers/StatItem';
 
 const StatItem = (props) => {
@@ -12,6 +14,14 @@ const StatItem = (props) => {
       <h5 className='title'>{title}</h5>
     </Wrapper>
   );
+};
+
+StatItem.propTypes = {
+  count: PropTypes.number,
+  title: PropTypes.string,
+  icon: PropTypes.object,
+  color: PropTypes.string,
+  bgColor: PropTypes.string,
 };
 
 export default StatItem;
