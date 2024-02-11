@@ -63,6 +63,7 @@ const router = createBrowserRouter([
           {
             path: 'profile',
             element: <Profile />,
+            action: Profile.action,
           },
           {
             path: 'admin',

@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import cloudinary from 'cloudinary';
 
 import jobRouter from './routes/jobRouter.js';
 import authRouter from './routes/authRouter.js';
@@ -16,6 +17,12 @@ import { authenticateUser } from './middleware/authMiddleware.js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5100;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 /******************** MIDDLEWARES ********************/
 // Setup public folder
