@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types';
 
 const FormRow = (props) => {
-  const { type, name, labelText, placeholder, defaultValue = '' } = props;
+  const {
+    type,
+    name,
+    labelText,
+    placeholder,
+    defaultValue = '',
+    handleChange,
+  } = props;
 
   return (
     <div className='form-row'>
@@ -16,6 +23,7 @@ const FormRow = (props) => {
         placeholder={placeholder}
         defaultValue={defaultValue}
         required
+        onChange={handleChange}
       />
     </div>
   );
@@ -27,6 +35,7 @@ FormRow.propTypes = {
   labelText: PropTypes.string,
   placeholder: PropTypes.string,
   defaultValue: PropTypes.string,
+  handleChange: PropTypes.func,
 };
 
 export default FormRow;
