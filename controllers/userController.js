@@ -1,9 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import cloudinary from 'cloudinary';
-import { promises as fs } from 'fs';
 
 import User from '../models/UserModel.js';
 import Job from '../models/JobModel.js';
+import { formatImage } from '../middleware/multerMiddleware.js';
 
 export const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
@@ -22,8 +22,13 @@ export const updateUser = async (req, res) => {
   delete newUser.password;
 
   if (req.file) {
-    const response = await cloudinary.v2.uploader.upload(req.file.path);
-    await fs.unlink(req.file.path); // Remove img from file path
+    // Format image since we are using in-memory option now,
+    // and cloudinary does not accept in-memory buffer data...
+    const file = formatImage(req.file);
+    const response = await cloudinary.v2.uploader.upload(file);
+
+    // Moving away from disk storage, hence below line is commented out.
+    // await fs.unlink(req.file.path); // Remove img from file path
     newUser.avatar = response.secure_url;
     newUser.avatarPublicId = response.public_id;
   }
