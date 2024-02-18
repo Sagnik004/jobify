@@ -7,6 +7,8 @@ import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cloudinary from 'cloudinary';
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
 
 import jobRouter from './routes/jobRouter.js';
 import authRouter from './routes/authRouter.js';
@@ -35,11 +37,10 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json()); // Allow to receive JSON payloads
 app.use(cookieParser()); // Parse incoming cookies (JWT)
+app.use(helmet());
+app.use(mongoSanitize());
 
 /******************** ROUTES ********************/
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 app.post('/', (req, res) => {
   console.log(req);
   res.json({ message: 'data received', data: req.body });
