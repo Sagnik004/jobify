@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { Outlet, redirect, useNavigate, useNavigation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
@@ -38,6 +38,7 @@ const DashboardLayout = ({ queryClient }) => {
   const { user } = useQuery(userQuery).data;
   const [showSidebar, setShowSidebar] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(setDefaultTheme());
+  const [isAuthError, setIsAuthError] = useState(false);
 
   const isPageLoading = navigation.state === 'loading';
 
@@ -56,6 +57,22 @@ const DashboardLayout = ({ queryClient }) => {
     queryClient.invalidateQueries();
     toast.success('Logging out...');
   };
+
+  customFetch.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === 401) {
+        setIsAuthError(true);
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  useEffect(() => {
+    if (!isAuthError) return;
+
+    logoutUser();
+  }, [isAuthError]);
 
   return (
     <DashboardContext.Provider
